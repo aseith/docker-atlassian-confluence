@@ -1,19 +1,30 @@
-FROM openjdk:8
+FROM debian:jessie
 
 # Setup useful environment variables
 ENV CONF_HOME     /var/atlassian/confluence
 ENV CONF_INSTALL  /opt/atlassian/confluence
 ENV CONF_VERSION  6.3.4
 
+ENV JAVA_HOME     /usr/lib/jvm/jdk1.8.0_144
+ENV PATH          $PATH:$JAVA_HOME/bin
 ENV JAVA_CACERTS  $JAVA_HOME/jre/lib/security/cacerts
 ENV CERTIFICATE   $CONF_HOME/certificate
 
-# Install Atlassian Confluence and hepler tools and setup initial home
-# directory structure.
+#Install dependencies
 RUN set -x \
     && apt-get update --quiet \
-    && apt-get install --quiet --yes --no-install-recommends libtcnative-1 xmlstarlet \
+    && apt-get install --quiet --yes --no-install-recommends curl ca-certificates libtcnative-1 xmlstarlet \
     && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# Install Oracle JDK
+RUN set -x \
+    && mkdir -p /usr/lib/jvm \
+    && curl -L -k -H "Cookie: oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u144-b01/090f390dda5b47b9b721c7dfaa008135/jdk-8u144-linux-x64.tar.gz" | tar -xz --directory /usr/lib/jvm --no-same-owner
+
+# Install Atlassian Confluence and helper tools and setup initial home
+# directory structure.
+RUN set -x \
     && mkdir -p                "${CONF_HOME}" \
     && chmod -R 700            "${CONF_HOME}" \
     && chown daemon:daemon     "${CONF_HOME}" \
