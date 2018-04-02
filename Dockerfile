@@ -5,7 +5,7 @@ ENV CONF_HOME     /var/atlassian/confluence
 ENV CONF_INSTALL  /opt/atlassian/confluence
 ENV CONF_VERSION  6.8.0
 
-ENV JAVA_HOME     /usr/lib/jvm/jdk1.8.0_144
+ENV JAVA_HOME     /usr/lib/jvm/jdk1.8.0_162
 ENV PATH          $PATH:$JAVA_HOME/bin
 ENV JAVA_CACERTS  $JAVA_HOME/jre/lib/security/cacerts
 ENV CERTIFICATE   $CONF_HOME/certificate
@@ -20,7 +20,7 @@ RUN set -x \
 # Install Oracle JDK
 RUN set -x \
     && mkdir -p /usr/lib/jvm \
-    && curl -L -k -H "Cookie: oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u144-b01/090f390dda5b47b9b721c7dfaa008135/jdk-8u144-linux-x64.tar.gz" | tar -xz --directory /usr/lib/jvm --no-same-owner
+    && curl -L -k -H "Cookie: oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u162-b12/090f390dda5b47b9b721c7dfaa008135/jdk-8u162-linux-x64.tar.gz" | tar -xz --directory /usr/lib/jvm --no-same-owner
 
 # Install Atlassian Confluence and helper tools and setup initial home
 # directory structure.
