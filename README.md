@@ -13,5 +13,4 @@ Then you can run it like so:
 ```bash
 docker run --detach --publish 8090:8090 atlassian-confluence:latest
 ```
-
 Then simply navigate your preferred browser to `http://[dockerhost]:8090` and finish the configuration.
